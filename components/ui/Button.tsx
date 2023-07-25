@@ -1,6 +1,11 @@
 import React from 'react';
 
-const Button = props => {
+interface ButtonProps {
+  children: React.ReactNode;
+  textColor?: string;
+}
+
+const Button: React.FC<ButtonProps> = props => {
   const { children, textColor } = props;
   return <div className={`text-[${textColor}] flex`}>{children}</div>;
 };
