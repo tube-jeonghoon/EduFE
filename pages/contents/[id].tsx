@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import VideoPlayer from '../../components/videoPlayer/VideoPlayer';
+import { io } from 'socket.io-client';
+import styles from './contents.module.css'; /// 경로 추가.
+import { Quiz } from './types';
 
 interface VideoDetails {
   id: string;
@@ -15,6 +18,7 @@ const DetailsPage: React.FC = () => {
   const { id } = router.query;
 
   const [videoDetails, setVideoDetails] = useState<VideoDetails | null>(null);
+  const [quiz, sendQuiz] = useState<Quiz | null>(null);
 
   useEffect(() => {
     const fetchVideoDetails = async () => {
@@ -32,6 +36,47 @@ const DetailsPage: React.FC = () => {
       fetchVideoDetails();
     }
   }, [id]);
+
+  useEffect(() => {
+    const socket = io('wss://eduplay.jisuheo.shop', {
+      transports: ['websocket'],
+    });
+    console.log('socket.io connected');
+
+    // 퀴즈 주제 선택
+    socket.emit('startQuiz', 1); // topic 선택은 나중에 prompt로 수정
+
+    // 퀴즈 받아오기
+    socket.on('sendQuiz', (quiz: Quiz) => {
+      console.log('fr: ', quiz);
+
+      // 퀴즈와 정답지 표시
+      console.log(quiz.quiz);
+      quiz.answerList.forEach((option, idx) => {
+        console.log({ index: idx + 1, option: option });
+      });
+      // 사용자에게 답변 선택 요청
+      const userAnswer = prompt('정답을 골라주세요: '); // 입력 말고 클릭이벤트로 변경
+      let isCorrect = false;
+
+      // 선택한 답변 서버로 전송 (정답여부 포함)
+      if (quiz.answerList[userAnswer - 1] == quiz.answer) {
+        isCorrect = true;
+        console.log('맞았습니다!!');
+      } else {
+        console.log('틀렸습니다 ㅜㅜ');
+      }
+
+      socket.emit('sendAnswer', {
+        quizId: quiz.id,
+        isCorrect: isCorrect,
+      });
+    });
+
+    socket.on('user disconnection', (msg: string) => {
+      console.log('연결 종료', msg);
+    });
+  });
 
   if (!videoDetails) {
     return (
@@ -57,6 +102,16 @@ const DetailsPage: React.FC = () => {
         </div>
         <div>영상 설명</div>
       </div>
+      {quiz && (
+        <div>
+          <p>{quiz.quiz}</p>
+          {quiz.answerList.map((option, idx) => (
+            <button key={idx} onClick={() => handleAnswer(idx + 1)}>
+              {idx + 1}: {option}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
