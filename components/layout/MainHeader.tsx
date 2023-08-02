@@ -1,9 +1,10 @@
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './main-header.module.css';
 import Button from '../ui/Button';
 
 const MainHeader = () => {
+  const [token, setToken] = useState(false);
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start ">
@@ -41,20 +42,22 @@ const MainHeader = () => {
           Edu Play
         </Link>
       </div>
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
-          <li>
-            <a>Home</a>
-          </li>
-          <li>
-            <a>MyPage</a>
-          </li>
-        </ul>
-      </div>
-      <div className="navbar-end">
-        <a className="btn login mr-2">로그인</a>
-        <a className="btn">회원가입</a>
-      </div>
+      {token ? (
+        <div className="navbar-end">
+          <Link href="/mypage" className="btn mr-[1rem]">
+            마이페이지
+          </Link>
+        </div>
+      ) : (
+        <div className="navbar-end">
+          <Link href="/login" className="btn mr-[1rem]">
+            로그인
+          </Link>
+          <Link href="/signup" className="btn mr-[1rem]">
+            회원가입
+          </Link>
+        </div>
+      )}
     </div>
   );
 };
