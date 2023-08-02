@@ -7,7 +7,7 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = props => {
   return (
-    <div className="max-w-[1200px] mx-auto bg-slate-50">
+    <div className="max-w-[1200px] mx-auto">
       <MainHeader />
       <main>{props.children}</main>
     </div>
