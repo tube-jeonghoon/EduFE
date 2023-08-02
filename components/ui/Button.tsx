@@ -1,8 +1,18 @@
 import React from 'react';
 
-const Button = props => {
-  const { children, textColor } = props;
-  return <div className={`text-[${textColor}] flex`}>{children}</div>;
+interface ButtonProps {
+  children: React.ReactNode;
+  textColor?: string;
+  bgColor?: string;
+}
+
+const Button: React.FC<ButtonProps> = props => {
+  const { children, textColor, bgColor } = props;
+  return (
+    <div className={`btn border-none ${textColor} ${bgColor} flex`}>
+      {children}
+    </div>
+  );
 };
 
 export default Button;
