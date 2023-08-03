@@ -49,6 +49,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoSrc }) => {
           loop: true,
           muted: true,
           preload: 'auto',
+          autoplay: 'any',
           sources: [
             {
               src: videoSrc,
