@@ -4,7 +4,7 @@ import axios from 'axios';
 import VideoPlayer from '../../components/videoPlayer/VideoPlayer';
 import { io } from 'socket.io-client';
 import styles from './contents.module.css'; /// 경로 추가.
-import { Quiz } from './types';
+import { Quiz } from '../../types/contents';
 
 interface VideoDetails {
   id: string;
