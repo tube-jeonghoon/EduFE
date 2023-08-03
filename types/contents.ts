@@ -1,4 +1,4 @@
-export class Topic {
+export interface Topic {
   id?: number;
   name?: string;
   created_at?: Date;
@@ -6,7 +6,7 @@ export class Topic {
   contents?: Content[];
 }
 
-export class Quiz {
+export interface Quiz {
   id?: number;
   topic?: Topic;
   quiz?: string;
@@ -15,7 +15,7 @@ export class Quiz {
   created_at?: Date;
 }
 
-export class Content {
+export interface Content {
   id?: number;
   originalName?: string;
   name?: string;
