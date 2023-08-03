@@ -61,7 +61,11 @@ const DetailsPage: React.FC = () => {
   };
 
   const handleAnswer = (userAnswer: number) => {
-    if (quiz && quiz.answerList[userAnswer - 1] == quiz.answer) {
+    if (
+      quiz &&
+      quiz.answerList &&
+      quiz.answerList[userAnswer - 1] == quiz.answer
+    ) {
       setIsCorrect(true);
       alert('정답입니다 👍');
       handleStartQuiz();
@@ -106,7 +110,7 @@ const DetailsPage: React.FC = () => {
           </button>
         </div>
       </div>
-      {quiz && (
+      {quiz && quiz.answerList && (
         <div>
           <p className="flex mb-4 text-2xl">{quiz.quiz}</p>
           {quiz.answerList.map((option, idx) => (
