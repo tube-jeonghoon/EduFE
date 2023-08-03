@@ -45,7 +45,10 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoSrc }) => {
     if (videoRef.current) {
       setPlayer(
         videojs(videoRef.current, {
-          controls: true,
+          controls: false,
+          loop: true,
+          muted: true,
+          preload: 'auto',
           sources: [
             {
               src: videoSrc,
@@ -65,7 +68,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoSrc }) => {
 
   return (
     <div>
-      <div data-vjs-player className="flex items-center">
+      <div data-vjs-player className="flex items-center rounded-2xl">
         <video ref={videoRef} className={`video-js`} />
       </div>
     </div>

@@ -16,8 +16,8 @@ const Card = (props: CardProps) => {
 
   return (
     <div className="card bg-base-100 shadow-xl p-[1.5rem] m-[1rem] rounded-box">
-      <div className="flex justify-center w-[14rem] h-[14rem] rounded-xl mx-auto">
-        <figure className="px-10 w-full">
+      <div className="flex justify-center w-[14rem] mx-auto">
+        <figure className="px-10 w-[12rem] h-[12rem]">
           <VideoPlayer videoSrc={cardThumbnailUrl} />
         </figure>
       </div>
