@@ -38,7 +38,7 @@ const Home: React.FC<HomeProps> = ({ cards }) => {
         <div className="text-[1.4rem]">어떻게 지내?</div>
         <div className="cards grid grid-cols-3 rounded-box w-full">
           {cards.map(card => (
-            <div key={card.name}>
+            <div className="min-h-[20rem]" key={card.name}>
               <Card
                 cardName={card.name}
                 cardThumbnailUrl={card.thumbnailUrl}
